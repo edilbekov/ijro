@@ -65,8 +65,11 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::prefix('tm-boshqarma')->group(function(){
 
     });
-    Route::prefix('front-orti')->group(function(){
-
+    Route::prefix('moddiy-taminot')->group(function(){
+        //Yoqilg'i va moylash xizmati
+        Route::post('/fuel/add',[FuelController::class,'add']);
+        Route::get('/fuel/view',[FuelController::class,'view']);
+        
     });
     Route::prefix('kadrlar')->group(function(){
 
