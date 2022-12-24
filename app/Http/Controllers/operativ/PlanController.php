@@ -11,7 +11,7 @@ use App\Http\Controllers\ResponseController;
 
 class PlanController extends Controller
 {
-    public function add(Request $request){
+    public function add(Request $request){        
         $validation = Validator::make($request->all(), [
             'plan'=>'required',
             'date'=>'required',            
@@ -19,16 +19,18 @@ class PlanController extends Controller
         if($validation->fails()){
             return ResponseController::error($validation->errors()->first(), 422);            
         }
-        $plans=Plan::select('plans')->where('date',$request->date)->firstOrFail();
-        if(isset($plans)){
+        
+        $plans=Plan::select('plans')->where('date',$request->date)->get();  
+        $plans[]=$request->plan;      
+        if(!count($plans)==0){            
             Plan::where('date',$request->date)->update([
                 'plans'=>$plans,
                 'date'=>$request->date
             ]);
         }
-        else{
+        else{            
             Plan::create([
-                'plans'=>$request->plans,
+                'plans'=>$request->plan,
                 'date'=>$request->date
             ]);
         }        
@@ -38,7 +40,15 @@ class PlanController extends Controller
         $data = Plan::select('*')
             ->whereMonth('date', Carbon::now()->month)
             ->get();
-        return ResponseController::data($data);
+        $plan=[];
+        foreach($data as $value){
+            $carbon=Carbon::create($value->date);
+            $dayofweek=$carbon->dayOfWeek;
+            $plan['plans'][]=$value->plans;
+            $plan['date'][]=$value->date;
+            $plan['days'][]=$dayofweek;
+        }
+        return ResponseController::data($plan);
     }
     public function add_week(Request $request){
           

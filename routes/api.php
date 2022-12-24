@@ -5,8 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\jt\SubjectController;
 use App\Http\Controllers\jt\ScheduleController;
+use App\Http\Controllers\qurol\WeaponController;
 use App\Http\Controllers\operativ\PlanController;
+use App\Http\Controllers\qurol\TechnicController;
 use App\Http\Controllers\jt\CompetitionController;
+use App\Http\Controllers\safarbarlik\MobilizationController;
+use App\Http\Controllers\tibbiy\MedicalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +49,18 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::get('/plan/view_week',[PlanController::class,'view_week']);
     });
     Route::prefix('qurol-aslaha')->group(function(){
-
+        //Texnik taminot
+        Route::post('/technic/add',[TechnicController::class,'add']);
+        Route::patch('/technic/update/{id}',[TechnicController::class,'update']);
+        Route::get('/technic/view',[TechnicController::class,'view']);
+        //Qurol aslaha
+        Route::post('/weapon/add',[WeaponController::class,'add']);
+        Route::patch('/weapon/update/{id}',[WeaponController::class,'update']);
+        Route::get('/weapon/view',[WeaponController::class,'view']);
+        //Avtomobil texnikalari
+        Route::post('/avto/add',[AvtoController::class,'add']);
+        Route::patch('/avto/update/{id}',[AvtoController::class,'update']);
+        Route::get('/avto/view',[AvtoController::class,'view']);
     });
     Route::prefix('tm-boshqarma')->group(function(){
 
@@ -57,10 +72,24 @@ Route::middleware('auth:sanctum')->group(function(){
 
     });
     Route::prefix('tibbiy-tashkilot')->group(function(){
-
+        //Umumiy holat
+        Route::post('/general/add',[MedicalController::class,'add']);
+        Route::patch('/general/update/{id}',[MedicalController::class,'update']);
+        Route::get('/general/view',[MedicalController::class,'view']);
+        //Birlamchi murojatlar
+        Route::post('/primary/add',[MedicalController::class,'add_primary']);
+        Route::patch('/primary/update/{id}',[MedicalController::class,'update_primary']);
+        Route::get('/primary/view',[MedicalController::class,'view_primary']);
     });
-    Route::prefix('schr')->group(function(){
-
+    Route::prefix('safarbarlik-boshqarmasi')->group(function(){
+        //Qoraqalpog'iston
+        Route::post('/qoraqalpogiston/add',[MobilizationController::class,'add_kk']);
+        Route::patch('/qoraqalpogiston/update/{id}',[MobilizationController::class,'update_kk']);
+        Route::post('/qoraqalpogiston/view',[MobilizationController::class,'view_kk']);
+        //Xorazm
+        Route::post('/xorazm/add',[MobilizationController::class,'add_kh']);
+        Route::patch('/xorazm/update/{id}',[MobilizationController::class,'update_kh']);
+        Route::post('/xorazm/view',[MobilizationController::class,'view_kh']);
     });
     Route::prefix('uy-joy')->group(function(){
 
@@ -71,7 +100,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::prefix('harbiy-kasbiy')->group(function(){
 
     });
-    Route::prefix('qushinlar')->group(function(){
+    Route::prefix('qushinlar-xizmati')->group(function(){
 
     });
     
