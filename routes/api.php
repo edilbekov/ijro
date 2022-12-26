@@ -5,12 +5,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\jt\SubjectController;
 use App\Http\Controllers\jt\ScheduleController;
+use App\Http\Controllers\moddiy\FoodController;
+use App\Http\Controllers\moddiy\FuelController;
 use App\Http\Controllers\qurol\WeaponController;
 use App\Http\Controllers\operativ\PlanController;
 use App\Http\Controllers\qurol\TechnicController;
+use App\Http\Controllers\uyjoy\HousingController;
 use App\Http\Controllers\jt\CompetitionController;
-use App\Http\Controllers\safarbarlik\MobilizationController;
+use App\Http\Controllers\moddiy\ClothesController;
 use App\Http\Controllers\tibbiy\MedicalController;
+use App\Http\Controllers\safarbarlik\MobilizationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +73,32 @@ Route::middleware('auth:sanctum')->group(function(){
         //Yoqilg'i va moylash xizmati
         Route::post('/fuel/add',[FuelController::class,'add']);
         Route::get('/fuel/view',[FuelController::class,'view']);
+
+        Route::post('/operativ/add',[FuelController::class,'add_operativ']);
+        Route::get('/operativ/view',[FuelController::class,'view_operativ']);
+
+        Route::post('/troops/add',[FuelController::class,'add_troops']);
+        Route::get('/troops/view',[FuelController::class,'view_troops']);
+
+        //Kiyim-kechak xizmati
+        Route::post('/clothes/add',[ClothesController::class,'add']);
+        Route::get('/clothes/view',[ClothesController::class,'view']);
+
+        Route::post('/schrclothes/add',[ClothesController::class,'add_schr']);
+        Route::get('/schrclothes/view',[ClothesController::class,'view_schr']);
+
+        Route::post('/contractclothes/add',[ClothesController::class,'add_contract']);
+        Route::get('/contractclothes/view',[ClothesController::class,'view_contract']);
+
+        //Oziq-ovqat xizmati
+        Route::post('/food/add',[FoodController::class,'add']);
+        Route::get('/food/view',[FoodController::class,'view']);
+
+        Route::post('/schrfood/add',[FoodController::class,'add_schr']);
+        Route::get('/schrfood/view',[FoodController::class,'view_schr']);
+
+        Route::post('/budjetfood/add',[FoodController::class,'add_budjet']);
+        Route::get('/budjetfood/view',[FoodController::class,'view_budjet']);
         
     });
     Route::prefix('kadrlar')->group(function(){
@@ -95,16 +125,33 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::post('/xorazm/view',[MobilizationController::class,'view_kh']);
     });
     Route::prefix('uy-joy')->group(function(){
-
+        //1-sonli yopiq shaxarcha xizmat lavozim uylari
+        Route::post('/housing1/add',[HousingController::class,'add']);
+        Route::get('/housing1/view',[HousingController::class,'view']);
+        //Oficerlar yotoqxonasida yashayaotgan xarbiy xizmatchilar
+        Route::post('/housing_oficers/add',[HousingController::class,'add_oficer']);
+        Route::get('/housing_oficers/view',[HousingController::class,'view_oficer']);
+        //Amalga oshirilayotgan qurilish ishlari
+        Route::post('/contruction/add',[HousingController::class,'add_construction']);
+        Route::get('/contruction/view',[HousingController::class,'view_construction']);
     });
     Route::prefix('tugilgan-kunlar')->group(function(){
-
+        Route::post('/add',[BirthdayController::class,'add']);
+        Route::get('/view',[BirthdayController::class,'view']);
     });
     Route::prefix('harbiy-kasbiy')->group(function(){
 
     });
     Route::prefix('qushinlar-xizmati')->group(function(){
-
+        //1-darajali naryadlar
+        Route::post('/naryad1/add',[NaryadController::class,'add_1']);
+        Route::get('/naryad1/view',[NaryadController::class,'view_1']);
+        //2-darajali naryadlar
+        Route::post('/naryad2/add',[NaryadController::class,'add_1']);
+        Route::get('/naryad2/view',[NaryadController::class,'view_1']);
+        //3-darajali naryadlar
+        Route::post('/naryad3/add',[NaryadController::class,'add_3']);
+        Route::get('/naryad3/view',[NaryadController::class,'view_3']);
     });
     
 });

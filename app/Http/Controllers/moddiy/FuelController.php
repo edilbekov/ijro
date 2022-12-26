@@ -5,6 +5,8 @@ namespace App\Http\Controllers\moddiy;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ResponseController;
 use App\Models\Fuel;
+use App\Models\OperativReserve;
+use App\Models\TroopsReserve;
 use Illuminate\Http\Request;
 
 class FuelController extends Controller
@@ -40,6 +42,28 @@ class FuelController extends Controller
         }
         $total=[$nextfirst,$nextsecond,$first,$second,$excessfirst,$excesssecond,$limitfirst,$limitsecond];
         $all[]=$total;
+        return ResponseController::data($all);
+    }
+    public function add_operativ(Request $request){
+        OperativReserve::create([
+            'name'=>$request->name,
+            'ymm'=>$request->ymm
+        ]);
+        return ResponseController::success();
+    }
+    public function view_operativ(){
+        $all=OperativReserve::all();
+        return ResponseController::data($all);
+    }
+    public function add_troops(Request $request){
+        TroopsReserve::create([
+            'name'=>$request->name,
+            'ymm'=>$request->ymm
+        ]);
+        return ResponseController::success();
+    }
+    public function view_troops(){
+        $all=TroopsReserve::all();
         return ResponseController::data($all);
     }
 }

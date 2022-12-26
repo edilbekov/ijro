@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Fuel extends Model
+class Naryad2 extends Model
 {
     use HasFactory;
-    protected $fillable=['shgho','fuel_spend'];
+    protected $fillable=['rank','fio','date'];
 }

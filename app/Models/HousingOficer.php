@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Fuel extends Model
+class HousingOficer extends Model
 {
     use HasFactory;
-    protected $fillable=['shgho','fuel_spend'];
+    protected $fillable=['military_rank','fio','institution','room','married','children'];
 }
