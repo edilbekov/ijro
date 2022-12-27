@@ -15,7 +15,7 @@ class ClothesController extends Controller
         $need=$request->need;
         $provided=$request->provided;
         $notenough=$need-$provided;
-        $providedpercent=($provided/$need)*100;
+        $providedpercent=ceil(($provided/$need)*100);
         Clothes::create([
             'name'=>$request->name,
             'measure'=>$request->measure,

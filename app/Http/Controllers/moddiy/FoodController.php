@@ -24,10 +24,15 @@ class FoodController extends Controller
         $total4=$qism_53008['quantity'];
         $total5=$qism_49093['quantity'];
         $total=$total1+$total2+$total3+$total4+$total5;
+        $mtt=json_encode($request->mtt);
+        $qism_21131=json_encode($request->qism_21131);
+        $qism_71181=json_encode($request->qism_71181);
+        $qism_53008=json_encode($request->qism_53008);
+        $qism_49093=json_encode($request->qism_49093);
         Food::create([
             'name'=>$request->name,
             'measure'=>$request->measure,
-            'mtt'=>$request->mtt,
+            'mtt'=>$mtt,
             'qism_21131'=>$qism_21131,
             'qism_71181'=>$qism_71181,
             'qism_53008'=>$qism_53008,
@@ -50,7 +55,7 @@ class FoodController extends Controller
         SchrFood::create([
             'militaries'=>$request->militaries,
             'fund'=>$request->fund,
-            'months'=>$months,            
+            'months'=>json_encode($months),            
             'residual'=>$residual
         ]);
         return ResponseController::success();
@@ -69,7 +74,7 @@ class FoodController extends Controller
         BudjetFood::create([
             'militaries'=>$request->militaries,
             'fund'=>$request->fund,
-            'months'=>$months,            
+            'months'=>json_encode($months),            
             'residual'=>$residual
         ]);
         return ResponseController::success();

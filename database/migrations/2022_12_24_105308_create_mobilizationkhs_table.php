@@ -22,8 +22,7 @@ return new class extends Migration
             $table->double('month_percent');
             $table->double('initial_sum');
             $table->double('residual');
-            $table->double('done');
-            $table->double('6.12');
+            $table->double('done');            
             $table->integer('naryad');
             $table->integer('full_paid');
             $table->integer('partially_paid');

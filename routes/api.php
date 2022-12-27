@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\jt\SubjectController;
+use App\Http\Controllers\qurol\AvtoController;
 use App\Http\Controllers\jt\ScheduleController;
 use App\Http\Controllers\moddiy\FoodController;
 use App\Http\Controllers\moddiy\FuelController;
@@ -14,6 +15,8 @@ use App\Http\Controllers\uyjoy\HousingController;
 use App\Http\Controllers\jt\CompetitionController;
 use App\Http\Controllers\moddiy\ClothesController;
 use App\Http\Controllers\tibbiy\MedicalController;
+use App\Http\Controllers\qushinlar\NaryadController;
+use App\Http\Controllers\birthday\BirthdayController;
 use App\Http\Controllers\safarbarlik\MobilizationController;
 
 /*
@@ -31,12 +34,12 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::prefix('jt')->group(function () {
         //Competition
         Route::post('/competition/add',[CompetitionController::class,'add']);
-        Route::patch('/competition/edit/{id}',[CompetitionController::class,'edit']);
+        Route::patch('/competition/update/{id}',[CompetitionController::class,'update']);
         Route::delete('/competition/delete/{id}',[CompetitionController::class,'delete']);
         Route::get('/competition/view',[CompetitionController::class,'view']);
         //Schedule
         Route::post('/schedule/add',[ScheduleController::class,'add']);
-        Route::patch('/schedule/edit/{id}',[ScheduleController::class,'edit']);
+        Route::patch('/schedule/update/{id}',[ScheduleController::class,'update']);
         Route::delete('/schedule/delete/{id}',[ScheduleController::class,'delete']);
         Route::get('/schedule/view',[ScheduleController::class,'view']);
             //Subject
@@ -49,7 +52,7 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::post('/plan/add',[PlanController::class,'add']);
         Route::get('/plan/view',[PlanController::class,'view']);
         //Week
-        Route::post('/plan/add_week',[PlanController::class,'add_week']);
+        // Route::post('/plan/add_week',[PlanController::class,'add_week']);
         Route::get('/plan/view_week',[PlanController::class,'view_week']);
     });
     Route::prefix('qurol-aslaha')->group(function(){
@@ -118,11 +121,11 @@ Route::middleware('auth:sanctum')->group(function(){
         //Qoraqalpog'iston
         Route::post('/qoraqalpogiston/add',[MobilizationController::class,'add_kk']);
         Route::patch('/qoraqalpogiston/update/{id}',[MobilizationController::class,'update_kk']);
-        Route::post('/qoraqalpogiston/view',[MobilizationController::class,'view_kk']);
+        Route::get('/qoraqalpogiston/view',[MobilizationController::class,'view_kk']);
         //Xorazm
         Route::post('/xorazm/add',[MobilizationController::class,'add_kh']);
         Route::patch('/xorazm/update/{id}',[MobilizationController::class,'update_kh']);
-        Route::post('/xorazm/view',[MobilizationController::class,'view_kh']);
+        Route::get('/xorazm/view',[MobilizationController::class,'view_kh']);
     });
     Route::prefix('uy-joy')->group(function(){
         //1-sonli yopiq shaxarcha xizmat lavozim uylari
@@ -132,8 +135,8 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::post('/housing_oficers/add',[HousingController::class,'add_oficer']);
         Route::get('/housing_oficers/view',[HousingController::class,'view_oficer']);
         //Amalga oshirilayotgan qurilish ishlari
-        Route::post('/contruction/add',[HousingController::class,'add_construction']);
-        Route::get('/contruction/view',[HousingController::class,'view_construction']);
+        Route::post('/construction/add',[HousingController::class,'add_construction']);
+        Route::get('/construction/view',[HousingController::class,'view_construction']);
     });
     Route::prefix('tugilgan-kunlar')->group(function(){
         Route::post('/add',[BirthdayController::class,'add']);

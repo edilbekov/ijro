@@ -31,11 +31,12 @@ class MobilizationController extends Controller
         } 
         $sum=$request->sum;
         $initial_sum=$request->initial_sum;
-        $done=($initial_sum/$sum)*100;
+        $done=ceil(($initial_sum/$sum)*100);
         
         $full_paid=$request->full_paid;
         $partially_paid=$request->partially_paid;
         $no_paid=$full_paid-$partially_paid;
+        $residual=$sum-$initial_sum;
         Mobilizationkk::create([
             'mib_name'=>$request->mib_name,
             'fio'=>$request->fio,
@@ -43,7 +44,7 @@ class MobilizationController extends Controller
             'date'=>$request->date,
             'month_percent'=>$request->month_percent,
             'initial_sum'=>$initial_sum,
-            'residual'=>$request->residual,
+            'residual'=>$residual,
             'done'=>$done,            
             'naryad'=>$request->naryad,
             'full_paid'=>$full_paid,
@@ -72,7 +73,7 @@ class MobilizationController extends Controller
         } 
         $sum=$request->sum;
         $initial_sum=$request->initial_sum;
-        $done=($initial_sum/$sum)*100;
+        $done=ceil(($initial_sum/$sum)*100);
         
         $full_paid=$request->full_paid;
         $partially_paid=$request->partially_paid;
@@ -95,23 +96,25 @@ class MobilizationController extends Controller
     }
     public function view_kk(){
         $all=Mobilizationkk::all();
-        $sum=0;
-        $initial_sum=0;
-        $naryad=0;
-        $full_paid=0;
-        $partially_paid=0;
-        $no_paid=0;
-        foreach($all as $value){
-            $sum+=$value['sum'];
-            $initial_sum+=$value['initial_sum'];
-            $naryad+=$value['naryad'];
-            $full_paid+=$value['full_paid'];
-            $partially_paid+=$value['partially_paid'];
-            $no_paid+=$value['full_paid'];
-        }
-        $done=($initial_sum/$sum)*100;
-        $total=['sum'=>$sum,'initial_sum'=>$initial_sum,'done'=>$done,'naryad'=>$naryad,'full_paid'=>$full_paid,'partially_paid'=>$partially_paid,'no_paid'=>$no_paid];
-        $all[]=$total;
+        if(!count($all)==0){
+            $sum=0;
+            $initial_sum=0;
+            $naryad=0;
+            $full_paid=0;
+            $partially_paid=0;
+            $no_paid=0;
+            foreach($all as $value){
+                $sum+=$value['sum'];
+                $initial_sum+=$value['initial_sum'];
+                $naryad+=$value['naryad'];
+                $full_paid+=$value['full_paid'];
+                $partially_paid+=$value['partially_paid'];
+                $no_paid+=$value['no_paid'];
+            }
+            $done=($initial_sum/$sum)*100;
+            $total=['sum'=>$sum,'initial_sum'=>$initial_sum,'done'=>$done,'naryad'=>$naryad,'full_paid'=>$full_paid,'partially_paid'=>$partially_paid,'no_paid'=>$no_paid];
+            $all['total']=$total;
+        }        
         return ResponseController::data($all);
     }
     public function add_kh(Request $request){
@@ -134,11 +137,12 @@ class MobilizationController extends Controller
         } 
         $sum=$request->sum;
         $initial_sum=$request->initial_sum;
-        $done=($initial_sum/$sum)*100;
+        $done=ceil(($initial_sum/$sum)*100);
         
         $full_paid=$request->full_paid;
         $partially_paid=$request->partially_paid;
         $no_paid=$full_paid-$partially_paid;
+        $residual=$sum-$initial_sum;
         Mobilizationkh::create([
             'mib_name'=>$request->mib_name,
             'fio'=>$request->fio,
@@ -146,7 +150,7 @@ class MobilizationController extends Controller
             'date'=>$request->date,
             'month_percent'=>$request->month_percent,
             'initial_sum'=>$initial_sum,
-            'residual'=>$request->residual,
+            'residual'=>$residual,
             'done'=>$done,            
             'naryad'=>$request->naryad,
             'full_paid'=>$full_paid,
@@ -175,7 +179,7 @@ class MobilizationController extends Controller
         } 
         $sum=$request->sum;
         $initial_sum=$request->initial_sum;
-        $done=($initial_sum/$sum)*100;
+        $done=ceil(($initial_sum/$sum)*100);
         
         $full_paid=$request->full_paid;
         $partially_paid=$request->partially_paid;
@@ -196,25 +200,27 @@ class MobilizationController extends Controller
         ]);
         return ResponseController::success();
     }
-    public function view(){
-        $all=Mobilizationkh::all();
-        $sum=0;
-        $initial_sum=0;
-        $naryad=0;
-        $full_paid=0;
-        $partially_paid=0;
-        $no_paid=0;
-        foreach($all as $value){
-            $sum+=$value['sum'];
-            $initial_sum+=$value['initial_sum'];
-            $naryad+=$value['naryad'];
-            $full_paid+=$value['full_paid'];
-            $partially_paid+=$value['partially_paid'];
-            $no_paid+=$value['full_paid'];
-        }
-        $done=($initial_sum/$sum)*100;
-        $total=['sum'=>$sum,'initial_sum'=>$initial_sum,'done'=>$done,'naryad'=>$naryad,'full_paid'=>$full_paid,'partially_paid'=>$partially_paid,'no_paid'=>$no_paid];
-        $all[]=$total;
+    public function view_kh(){        
+        $all=Mobilizationkh::all();        
+        if(!count($all)==0){
+            $sum=0;
+            $initial_sum=0;
+            $naryad=0;
+            $full_paid=0;
+            $partially_paid=0;
+            $no_paid=0;            
+            foreach($all as $value){
+                $sum+=$value['sum'];
+                $initial_sum+=$value['initial_sum'];
+                $naryad+=$value['naryad'];
+                $full_paid+=$value['full_paid'];
+                $partially_paid+=$value['partially_paid'];
+                $no_paid+=$value['no_paid'];
+            }        
+            $done=($initial_sum/$sum)*100;
+            $total=['sum'=>$sum,'initial_sum'=>$initial_sum,'done'=>$done,'naryad'=>$naryad,'full_paid'=>$full_paid,'partially_paid'=>$partially_paid,'no_paid'=>$no_paid];
+            $all['total']=$total;
+        }                
         return ResponseController::data($all);
     }
 }

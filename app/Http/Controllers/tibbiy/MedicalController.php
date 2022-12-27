@@ -13,7 +13,7 @@ class MedicalController extends Controller
     public function add(Request $request){
         Medical::create([
             'content'=>$request->content,
-            'general'=>$request->general,            
+            'general'=>json_encode($request->general),            
         ]);
         return ResponseController::success();
     }
@@ -31,7 +31,7 @@ class MedicalController extends Controller
     public function add_primary(Request $request){
         MedicalSecond::create([
             'diseases'=>$request->diseases,
-            'departments'=>$request->departments,            
+            'departments'=>json_encode($request->departments),            
         ]);
         return ResponseController::success();
     }

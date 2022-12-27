@@ -19,19 +19,19 @@ class ScheduleController extends Controller
         }                   
         $validation = Validator::make($request->all(), [
             'group'=>'required',
-            'daysofweek'=>'required',
+            'day_id'=>'required',
             'subjects'=>'required'
         ]);
 
         if($validation->fails()){
             return ResponseController::error($validation->errors()->first(), 422);            
         }
-        $day_id=$request->day_id; 
-        return $request;       
+        $day_id=$request->day_id;    
+        $subjects=json_encode($request->subjects);                                   
         Schedule::create([
             'group'=>$request->group,
             'day_id'=>$day_id,
-            'subjects'=>$request->subjects
+            'subjects'=>$subjects
         ]);
         return ResponseController::success();
     }
@@ -42,7 +42,7 @@ class ScheduleController extends Controller
         }                   
         $validation = Validator::make($request->all(), [
             'group'=>'required',
-            'daysofweek'=>'required',
+            'day_id'=>'required',
             'subjects'=>'required'
         ]);
 
@@ -50,11 +50,12 @@ class ScheduleController extends Controller
             return ResponseController::error($validation->errors()->first(), 422);            
         }
         $day_id=$request->day_id;
-        $day=Day::select('day')->where('id',$day_id)->first();
+        // $day=Day::select('day')->where('id',$day_id)->first();
+        $subjects=json_encode($request->subjects);         
         Schedule::where('id',$id)->update([
             'group'=>$request->group,
-            'daysofweek'=>$day,
-            'subjects'=>$request->subjects
+            'day_id'=>$day_id,
+            'subjects'=>$subjects
         ]);
         return ResponseController::success();
     }

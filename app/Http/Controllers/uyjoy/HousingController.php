@@ -55,7 +55,8 @@ class HousingController extends Controller
     public function view_construction(){
         $all_kk=Construction::where('region',"Qoraqalpog'iston")->get();
         $all_kh=Construction::where('region','Xorazm')->get();
-        $all=[$all_kk,$all_kh];
+        $all["Qoraqalpog'iston"]=$all_kk;
+        $all["Xorazm"]=$all_kh;
         return ResponseController::data($all);
     }
 }

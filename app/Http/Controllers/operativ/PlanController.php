@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\operativ;
 
 use Carbon\Carbon;
+use App\Models\Day;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -20,44 +21,46 @@ class PlanController extends Controller
             return ResponseController::error($validation->errors()->first(), 422);            
         }
         
-        $plans=Plan::select('plans')->where('date',$request->date)->get();  
-        $plans[]=$request->plan;      
-        if(!count($plans)==0){            
-            Plan::where('date',$request->date)->update([
-                'plans'=>$plans,
-                'date'=>$request->date
-            ]);
-        }
-        else{            
+        // $plans=Plan::select('plans')->where('date',$request->date)->first(); 
+        
+        // if(isset($plans)){                        
+        //     $plans=json_decode($plans,1); 
+        //     return $plans;
+        //     $plans[]=$request->plan;
+        //     return $plans;
+        //     Plan::where('date',$request->date)->update([
+        //         'plans'=>$plans,
+        //         'date'=>$request->date
+        //     ]);
+        // }
+        // else{                        
             Plan::create([
-                'plans'=>$request->plan,
+                'plans'=>json_encode($request->plan),
                 'date'=>$request->date
             ]);
-        }        
+        // }        
         return ResponseController::success();
     }
     public function view(){
         $data = Plan::select('*')
             ->whereMonth('date', Carbon::now()->month)
             ->get();
-        $plan=[];
-        foreach($data as $value){
-            $carbon=Carbon::create($value->date);
-            $dayofweek=$carbon->dayOfWeek;
-            $plan['plans'][]=$value->plans;
-            $plan['date'][]=$value->date;
-            $plan['days'][]=$dayofweek;
-        }
-        return ResponseController::data($plan);
+        // $plan=[];        
+        // foreach($data as $value){
+        //     $carbon=Carbon::create($value->date);            
+        //     $dayofweek=$carbon->dayOfWeek;
+        //     $dayofweek=Day::select('day')->where('id',$dayofweek)->first();            
+        //     $plan['plans']=$value->plans;
+        //     $plan['date']=$value->date;
+        //     $plan['day']=$dayofweek['day'];
+        // }
+        return ResponseController::data($data);
     }
     public function add_week(Request $request){
           
     }
-    public function view_week(){
-        $data = Plan::select('*')
-        ->whereWeek('date', Carbon::now()->week)
-        ->get();
-        // $data=Plan::whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+    public function view_week(){                   
+        $data=Plan::whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
         return ResponseController::data($data);
     }
 }
